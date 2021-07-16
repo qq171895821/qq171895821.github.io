@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Liang－Barsky算法 | ReevesBlog</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/favicon_circle.ico">
+    <script language="javascript" type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/jyms-blog/js/canvas_ribbon.js"></script>
+    <link rel="manifest" href="/jyms-blog/manifest.webmanifest" crossorigin="use-credentials">
+    <meta name="description" content="Welcome to ReevesBlog">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#46bd87">
+    <link rel="preload" href="/jyms-blog/assets/css/0.styles.ecb8b742.css" as="style"><link rel="preload" href="/jyms-blog/assets/js/app.d7dce730.js" as="script"><link rel="preload" href="/jyms-blog/assets/js/5.0d7927b5.js" as="script"><link rel="preload" href="/jyms-blog/assets/js/1.c5097614.js" as="script"><link rel="preload" href="/jyms-blog/assets/js/44.e66661c6.js" as="script"><link rel="prefetch" href="/jyms-blog/assets/js/10.34a0c1eb.js"><link rel="prefetch" href="/jyms-blog/assets/js/11.7ef9f10d.js"><link rel="prefetch" href="/jyms-blog/assets/js/12.f8f26884.js"><link rel="prefetch" href="/jyms-blog/assets/js/13.80ce13b0.js"><link rel="prefetch" href="/jyms-blog/assets/js/14.448ee332.js"><link rel="prefetch" href="/jyms-blog/assets/js/15.b9c57967.js"><link rel="prefetch" href="/jyms-blog/assets/js/16.0e7bff22.js"><link rel="prefetch" href="/jyms-blog/assets/js/17.235e8dad.js"><link rel="prefetch" href="/jyms-blog/assets/js/18.72ac649a.js"><link rel="prefetch" href="/jyms-blog/assets/js/19.a7e058e0.js"><link rel="prefetch" href="/jyms-blog/assets/js/2.2f8b266e.js"><link rel="prefetch" href="/jyms-blog/assets/js/20.d28134b8.js"><link rel="prefetch" href="/jyms-blog/assets/js/21.0f407732.js"><link rel="prefetch" href="/jyms-blog/assets/js/22.5f17f0b3.js"><link rel="prefetch" href="/jyms-blog/assets/js/23.07f34266.js"><link rel="prefetch" href="/jyms-blog/assets/js/24.81b8e527.js"><link rel="prefetch" href="/jyms-blog/assets/js/25.7376b292.js"><link rel="prefetch" href="/jyms-blog/assets/js/26.669f97c5.js"><link rel="prefetch" href="/jyms-blog/assets/js/27.bf8faff1.js"><link rel="prefetch" href="/jyms-blog/assets/js/28.b87a44c2.js"><link rel="prefetch" href="/jyms-blog/assets/js/29.9bd60a3e.js"><link rel="prefetch" href="/jyms-blog/assets/js/30.92e27bf2.js"><link rel="prefetch" href="/jyms-blog/assets/js/31.9073985c.js"><link rel="prefetch" href="/jyms-blog/assets/js/32.5259d3b9.js"><link rel="prefetch" href="/jyms-blog/assets/js/33.4696a8ae.js"><link rel="prefetch" href="/jyms-blog/assets/js/34.a367546f.js"><link rel="prefetch" href="/jyms-blog/assets/js/35.4acdfec4.js"><link rel="prefetch" href="/jyms-blog/assets/js/36.61d159f1.js"><link rel="prefetch" href="/jyms-blog/assets/js/37.5536ea99.js"><link rel="prefetch" href="/jyms-blog/assets/js/38.66e8969f.js"><link rel="prefetch" href="/jyms-blog/assets/js/39.127a8f2e.js"><link rel="prefetch" href="/jyms-blog/assets/js/40.823b4431.js"><link rel="prefetch" href="/jyms-blog/assets/js/41.eb48e9fb.js"><link rel="prefetch" href="/jyms-blog/assets/js/42.ac09141c.js"><link rel="prefetch" href="/jyms-blog/assets/js/43.046430e3.js"><link rel="prefetch" href="/jyms-blog/assets/js/45.b5408733.js"><link rel="prefetch" href="/jyms-blog/assets/js/46.b2e9289b.js"><link rel="prefetch" href="/jyms-blog/assets/js/47.6f00ab3a.js"><link rel="prefetch" href="/jyms-blog/assets/js/48.b6ef1781.js"><link rel="prefetch" href="/jyms-blog/assets/js/49.b49764f0.js"><link rel="prefetch" href="/jyms-blog/assets/js/50.7eaff3a5.js"><link rel="prefetch" href="/jyms-blog/assets/js/51.459f409d.js"><link rel="prefetch" href="/jyms-blog/assets/js/52.cb544ca2.js"><link rel="prefetch" href="/jyms-blog/assets/js/53.8073f07b.js"><link rel="prefetch" href="/jyms-blog/assets/js/54.7ed994cd.js"><link rel="prefetch" href="/jyms-blog/assets/js/55.9a695aff.js"><link rel="prefetch" href="/jyms-blog/assets/js/56.849ac73b.js"><link rel="prefetch" href="/jyms-blog/assets/js/57.e10c3d41.js"><link rel="prefetch" href="/jyms-blog/assets/js/58.3d7f28d5.js"><link rel="prefetch" href="/jyms-blog/assets/js/59.6ed6adfb.js"><link rel="prefetch" href="/jyms-blog/assets/js/6.c09119a3.js"><link rel="prefetch" href="/jyms-blog/assets/js/60.8588d9e5.js"><link rel="prefetch" href="/jyms-blog/assets/js/61.0a7bf41f.js"><link rel="prefetch" href="/jyms-blog/assets/js/62.e73a49e1.js"><link rel="prefetch" href="/jyms-blog/assets/js/63.87b47d8a.js"><link rel="prefetch" href="/jyms-blog/assets/js/64.dd1da935.js"><link rel="prefetch" href="/jyms-blog/assets/js/65.f6cafa0e.js"><link rel="prefetch" href="/jyms-blog/assets/js/66.813bd68c.js"><link rel="prefetch" href="/jyms-blog/assets/js/67.d737c90a.js"><link rel="prefetch" href="/jyms-blog/assets/js/68.449d546f.js"><link rel="prefetch" href="/jyms-blog/assets/js/69.787a81ac.js"><link rel="prefetch" href="/jyms-blog/assets/js/7.de2697f8.js"><link rel="prefetch" href="/jyms-blog/assets/js/8.b4a049b6.js"><link rel="prefetch" href="/jyms-blog/assets/js/9.997049d8.js"><link rel="prefetch" href="/jyms-blog/assets/js/vendors~flowchart.f40ae59c.js">
+    <link rel="stylesheet" href="/jyms-blog/assets/css/0.styles.ecb8b742.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-76959bf0><div data-v-76959bf0><div id="loader-wrapper" class="loading-wrapper" data-v-e60bdfd0 data-v-76959bf0 data-v-76959bf0><dl id="loading-tpl" data-v-e60bdfd0><div id="loading-contain" data-v-e60bdfd0><div id="loading-wrap1" class="loading-wrap" data-v-e60bdfd0><div id="loading-ball1" class="loading-ball" data-v-e60bdfd0></div></div> <div id="loading-wrap2" class="loading-wrap" data-v-e60bdfd0><div id="loading-ball2" class="loading-ball" data-v-e60bdfd0></div></div> <div id="loading-wrap3" class="loading-wrap" data-v-e60bdfd0><div id="loading-ball3" class="loading-ball" data-v-e60bdfd0></div></div> <div id="loading-wrap4" class="loading-wrap" data-v-e60bdfd0><div id="loading-ball4" class="loading-ball" data-v-e60bdfd0></div></div> <div id="loading-wrap5" class="loading-wrap" data-v-e60bdfd0><div id="loading-ball5" class="loading-ball" data-v-e60bdfd0></div></div></div></dl> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-5cb9a64e data-v-76959bf0 data-v-76959bf0><h3 class="title" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e>ReevesBlog</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e><input type="password" value="" data-v-5cb9a64e> <span data-v-5cb9a64e>Konck! Knock!</span> <button data-v-5cb9a64e>OK</button></label> <div class="footer" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e><span data-v-5cb9a64e><i class="iconfont reco-theme" data-v-5cb9a64e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-5cb9a64e>vuePress-theme-reco</a></span> <span data-v-5cb9a64e><i class="iconfont reco-copyright" data-v-5cb9a64e></i> <a data-v-5cb9a64e><span data-v-5cb9a64e>Reeves</span>
+            
+          <span data-v-5cb9a64e>2020 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-76959bf0><header class="navbar" data-v-76959bf0><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/jyms-blog/" class="home-link router-link-active"><img src="/jyms-blog/logo.jpg" alt="ReevesBlog" class="logo"> <span class="site-name">ReevesBlog</span></a> <div class="links"><div id="dayNightSwitch" class="generalWrapper" data-v-32f44868><a class="click" data-v-32f44868><div class="onOff daySwitch" data-v-32f44868><div class="star star1" data-v-32f44868></div> <div class="star star2" data-v-32f44868></div> <div class="star star3" data-v-32f44868></div> <div class="star star4" data-v-32f44868></div> <div class="star star5" data-v-32f44868></div> <div class="star sky" data-v-32f44868></div> <div class="sunMoon" data-v-32f44868><div class="crater crater1" data-v-32f44868></div> <div class="crater crater2" data-v-32f44868></div> <div class="crater crater3" data-v-32f44868></div> <div class="cloud part1" data-v-32f44868></div> <div class="cloud part2" data-v-32f44868></div></div></div></a></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/jyms-blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/D3js/" class="nav-link"><i class="iconfont undefined"></i>
+  D3js
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Frida/" class="nav-link"><i class="iconfont undefined"></i>
+  Frida
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/JavaScript/" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Machine Learning/" class="nav-link"><i class="iconfont undefined"></i>
+  Machine Learning
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Vuepress/" class="nav-link"><i class="iconfont undefined"></i>
+  Vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/dy/" class="nav-link"><i class="iconfont undefined"></i>
+  dy
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/npm/" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/other/" class="nav-link"><i class="iconfont undefined"></i>
+  other
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/vim/" class="nav-link"><i class="iconfont undefined"></i>
+  vim
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/抓包/" class="nav-link"><i class="iconfont undefined"></i>
+  抓包
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/算法笔记/" class="nav-link"><i class="iconfont undefined"></i>
+  算法笔记
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/计算机图形学/" class="nav-link"><i class="iconfont undefined"></i>
+  计算机图形学
+</a></li></ul></div></div><div class="nav-item"><a href="/jyms-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/jyms-blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      Docs
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/theme-reco/" class="nav-link"><i class="iconfont undefined"></i>
+  vuepress-reco
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/满意度调查项目/" class="nav-link"><i class="iconfont undefined"></i>
+  满意度调查项目
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/计算机网络实验/" class="nav-link"><i class="iconfont undefined"></i>
+  计算机网络实验
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/JymsLeetCode记录/" class="nav-link"><i class="iconfont undefined"></i>
+  JymsLeetCode记录
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/航空公司付费旅客意愿识别/" class="nav-link"><i class="iconfont undefined"></i>
+  航空公司付费旅客意愿识别
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-other"></i>
+      Tools
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://codesandbox.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-coding"></i>
+  codeSandbox
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://tool.oschina.net/uploads/apidocs/jquery/regexp.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-coding"></i>
+  正则表达式手册
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://mp.weixin.qq.com/s/A7N2_ftjhRCQOgulgOE3JQ" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  leetCode刷题指南
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.emojiall.com/zh-hans" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-other"></i>
+  Emoji表情站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://lovelijunyi.gitee.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  (博客搭建)
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://reinness.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  大佬博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.pengzhihui.xyz/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  稚晖大佬的博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://vuepress-theme.mrhope.site/zh/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Vuepress-theme-hope
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://css-tricks.neatbang.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  CSS Tricks
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://itmyhome.com/markdown/article/about/readme.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Markdown文档
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://joyfulpandas.datawhale.club/Home.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  JoyfulPandas
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.coocolors.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Coocolors配色网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-faq"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/JJymsWorld" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/Minipepe" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-76959bf0></div> <aside class="sidebar" data-v-76959bf0><div class="personal-info-wrapper" data-v-03833281 data-v-76959bf0><img src="/jyms-blog/avatar.jpg" alt="author-avatar" class="personal-img" data-v-03833281> <h3 class="name" data-v-03833281>
+    Reeves
+  </h3> <div class="num" data-v-03833281><div data-v-03833281><h3 data-v-03833281>30</h3> <h6 data-v-03833281>Article</h6></div> <div data-v-03833281><h3 data-v-03833281>14</h3> <h6 data-v-03833281>Tag</h6></div></div> <hr data-v-03833281></div> <nav class="nav-links"><div class="nav-item"><a href="/jyms-blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/D3js/" class="nav-link"><i class="iconfont undefined"></i>
+  D3js
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Frida/" class="nav-link"><i class="iconfont undefined"></i>
+  Frida
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/JavaScript/" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Machine Learning/" class="nav-link"><i class="iconfont undefined"></i>
+  Machine Learning
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/SpringBoot/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/Vuepress/" class="nav-link"><i class="iconfont undefined"></i>
+  Vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/dy/" class="nav-link"><i class="iconfont undefined"></i>
+  dy
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/npm/" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/other/" class="nav-link"><i class="iconfont undefined"></i>
+  other
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/vim/" class="nav-link"><i class="iconfont undefined"></i>
+  vim
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/抓包/" class="nav-link"><i class="iconfont undefined"></i>
+  抓包
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/算法笔记/" class="nav-link"><i class="iconfont undefined"></i>
+  算法笔记
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/categories/计算机图形学/" class="nav-link"><i class="iconfont undefined"></i>
+  计算机图形学
+</a></li></ul></div></div><div class="nav-item"><a href="/jyms-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/jyms-blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      Docs
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/theme-reco/" class="nav-link"><i class="iconfont undefined"></i>
+  vuepress-reco
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/满意度调查项目/" class="nav-link"><i class="iconfont undefined"></i>
+  满意度调查项目
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/计算机网络实验/" class="nav-link"><i class="iconfont undefined"></i>
+  计算机网络实验
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/JymsLeetCode记录/" class="nav-link"><i class="iconfont undefined"></i>
+  JymsLeetCode记录
+</a></li><li class="dropdown-item"><!----> <a href="/jyms-blog/docs/航空公司付费旅客意愿识别/" class="nav-link"><i class="iconfont undefined"></i>
+  航空公司付费旅客意愿识别
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-other"></i>
+      Tools
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://codesandbox.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-coding"></i>
+  codeSandbox
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://tool.oschina.net/uploads/apidocs/jquery/regexp.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-coding"></i>
+  正则表达式手册
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://mp.weixin.qq.com/s/A7N2_ftjhRCQOgulgOE3JQ" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  leetCode刷题指南
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.emojiall.com/zh-hans" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-other"></i>
+  Emoji表情站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://lovelijunyi.gitee.io/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  (博客搭建)
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://reinness.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  大佬博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.pengzhihui.xyz/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  稚晖大佬的博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://vuepress-theme.mrhope.site/zh/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Vuepress-theme-hope
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://css-tricks.neatbang.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  CSS Tricks
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://itmyhome.com/markdown/article/about/readme.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Markdown文档
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://joyfulpandas.datawhale.club/Home.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  JoyfulPandas
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.coocolors.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-blog"></i>
+  Coocolors配色网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-faq"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/JJymsWorld" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/Minipepe" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-5cb9a64e data-v-76959bf0><h3 class="title" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e>Liang－Barsky算法</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e><input type="password" value="" data-v-5cb9a64e> <span data-v-5cb9a64e>Konck! Knock!</span> <button data-v-5cb9a64e>OK</button></label> <div class="footer" style="display:none;" data-v-5cb9a64e data-v-5cb9a64e><span data-v-5cb9a64e><i class="iconfont reco-theme" data-v-5cb9a64e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-5cb9a64e>vuePress-theme-reco</a></span> <span data-v-5cb9a64e><i class="iconfont reco-copyright" data-v-5cb9a64e></i> <a data-v-5cb9a64e><span data-v-5cb9a64e>Reeves</span>
+            
+          <span data-v-5cb9a64e>2020 - </span>
+          2021
+        </a></span></div></div> <div data-v-76959bf0><main id="pagenestarea" class="page"><!----> <div class="page-title" style="display:none;"><h1 class="title">Liang－Barsky算法</h1> <div data-v-698a76ac><i class="iconfont reco-account" data-v-698a76ac><span data-v-698a76ac>Reeves</span></i> <i class="iconfont reco-date" data-v-698a76ac><span data-v-698a76ac>2021-05-11</span></i> <i class="iconfont reco-eye" data-v-698a76ac><span id="/jyms-blog/blogs/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E8%A3%81%E5%89%AA%E7%AE%97%E6%B3%95%E4%B9%8BLiang%EF%BC%8DBarsky.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-698a76ac><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="iconfont reco-tag tags" data-v-698a76ac><span class="tag-item" data-v-698a76ac>计算机图形学</span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><div class="custom-block tip"><p>裁剪算法之Liang－Barsky算法</p></div> <h2 id="一-概念"><a href="#一-概念" class="header-anchor">#</a> 一. 概念</h2> <p>裁剪是CG中许多重要问题的基础，裁剪最典型的用途是确定场景中或画面中位于给定区域之内的部分。由于在一个典型的场景中，需要对大量的点、线段进行裁剪，因此裁剪算法的效率十分重要。</p> <p>关于裁剪有一些很常见的算法，比如说Cohen-Sutherland线段细分裁剪算法、中点分割算法、Cyrus-Beck算法、Liang-Barsky算法等。这里主要介绍Liang-Barsky算法。</p> <h2 id="二-liang-barsky算法"><a href="#二-liang-barsky算法" class="header-anchor">#</a> 二. Liang-Barsky算法</h2> <p>首先知道直线和裁剪框的位置关系，如下图：</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109022843394.png" alt=""></p> <p>可以看到直线可能完全在裁剪框的外面，也可能完全在裁剪框的里面，或者和裁剪框相交。</p> <p>所以裁剪的规则是这样的：</p> <ol><li><p>如果直线的两个端点都在窗口边界内，如ab，则直线保留；</p></li> <li><p>如果直线的一个端点在窗口边界之内，另一个端点在窗口边界之外，如ef，则应从直线与边界的而交点处裁剪掉；</p></li> <li><p>如果直线的两个端点都在窗口边界之外，则分两种情况：</p> <ul><li>一种情况如ij，直线全部在窗口之外，应该全部裁剪掉；</li> <li>另一种情况如gh，直接横穿窗口边界，应该保留相交的片段，裁剪掉剩余的片段。</li></ul></li></ol> <hr> <p><strong>算法推导：</strong></p> <p>如下图所示：</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/liang2.png" alt=""></p> <p>这里用参数方程表示直线P~1~P~2~,其中t是一个参数，t∈[0,1]：</p> <p>​	<img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/liang3.png" alt=""></p> <p>裁剪区域内部可以表达为两个不等式：</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/2018110902451641.png" alt=""></p> <p>把上述参数方程代入得到不等式：</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109024816121.png" alt=""></p> <p>即</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109024844225.png" alt=""></p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109024906302.png" alt=""></p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109025824716.png" alt=""></p> <p><strong>把直线看成是一条有方向的线段，把窗口的四条边及其延长线分成两类：入边和出边</strong></p> <p>入边：左边界和下边界----从裁剪框外向内</p> <p>出边：右边界和上边界----从裁剪框内向外</p> <p><img src="https://cdn.jsdelivr.net/gh/qq171895821/Jymscloudiimmgg@main/img/20181109030255360.png" alt=""></p> <p><strong>分情况讨论</strong></p> <ol><li>d=0，q&lt;0, 说明直线与裁剪框平行，并且位于裁剪框的外面，直线为不可见，可抛弃，直接结束。q&gt;=0，说明直线在它所平行的窗口边界的内部，还需进一步计算确定直线是否在窗口内、外、或者相交</li> <li>d&lt;0，说明直线是从裁剪边界的外部延伸到内部</li> <li>d&gt;0,  说明直线是从裁剪边界的内部延伸到外部</li></ol> <p>对于d≠0，可以利用式子计算直线与边界k的交点的参数u。对于每条直线，可以计算直线位于裁剪窗口内线段的参数d1和d2</p> <p>d1的值是由那些使得直线是从外部延伸到内部的窗口边界决定。对于这些边计算ri = qi/di.</p> <p>d1 = max(ri,0)</p> <p>d2的值是由那些使得直线是从内部延伸到窗口边界决定</p> <p>d2 = min(ri,1)</p> <p>如果d1&gt;d2,这条直线完全在窗口的外面，不可见，可抛弃，否则，根据参数u的两个值，计算出裁剪后线段的端点</p> <h3 id="伪代码如下"><a href="#伪代码如下" class="header-anchor">#</a> 伪代码如下：</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#Liang-Barsky two-dimensional clipping algorithm</span>
+<span class="token comment">#P1 and P2 are the line end points with components x1,y1,x2,y2</span>
+<span class="token comment">#tL and tU are the lower and upper parametric limits</span>
+<span class="token comment">#xL,xR,yB,yT are the left,right,bottom and top window edges</span>
+	<span class="token keyword">function</span> clipt<span class="token punctuation">(</span>d,q,tL,tU<span class="token punctuation">)</span>:
+		clipt performs trivial rejection tests and finds
+		the max of the lower <span class="token builtin class-name">set</span> of parameter values and 
+		the min of the upper <span class="token builtin class-name">set</span> of parameter values
+		
+		visible <span class="token operator">=</span> <span class="token boolean">true</span>
+		<span class="token keyword">if</span> <span class="token assign-left variable">d</span><span class="token operator">=</span><span class="token number">0</span> and q<span class="token operator">&lt;</span><span class="token number">0</span> <span class="token keyword">then</span> <span class="token comment">#line is outside and parallel to edge</span>
+			visible <span class="token operator">=</span> <span class="token boolean">false</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> d <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token keyword">then</span> <span class="token comment">#looking for upper limit</span>
+			t <span class="token operator">=</span> q/d
+			<span class="token keyword">if</span> t<span class="token operator">&gt;</span>tU <span class="token keyword">then</span> <span class="token comment">#check for trivial invisible</span>
+				visible <span class="token operator">=</span> <span class="token boolean">false</span>
+			<span class="token keyword">else</span> <span class="token keyword">if</span> t<span class="token operator">&gt;</span>tL <span class="token keyword">then</span> <span class="token comment">#find the min of the max</span>
+				tL <span class="token operator">=</span> t
+			end <span class="token keyword">if</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> d<span class="token operator">&gt;</span><span class="token number">0</span> <span class="token keyword">then</span> <span class="token comment">#look for the lower limit</span>
+			t <span class="token operator">=</span> q/d
+			<span class="token keyword">if</span> t<span class="token operator">&lt;</span>tL <span class="token keyword">then</span> <span class="token comment">#check for trivial invisible</span>
+				visible <span class="token operator">=</span> <span class="token boolean">false</span>
+			<span class="token keyword">else</span> <span class="token keyword">if</span> t<span class="token operator">&lt;</span>tU <span class="token keyword">then</span> <span class="token comment">#find the max of the min</span>
+				tU <span class="token operator">=</span> t
+			end <span class="token keyword">if</span>
+			
+		end <span class="token keyword">if</span>
+		<span class="token builtin class-name">return</span> visible
+	end <span class="token keyword">function</span>
+	
+	start the main funciton:
+		<span class="token assign-left variable">tL</span><span class="token operator">=</span><span class="token number">0</span>,tU<span class="token operator">=</span><span class="token number">1</span>
+		delatx <span class="token operator">=</span> x2-x1
+		<span class="token keyword">if</span> clipt<span class="token punctuation">(</span>-delatx,x1-xL,tL,tU<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token keyword">then</span> <span class="token comment">#left edge</span>
+			<span class="token keyword">if</span> clipt<span class="token punctuation">(</span>delatx,xR-x1,tL,tU<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token keyword">then</span> <span class="token comment">#right edge</span>
+				deltay <span class="token operator">=</span> y2-y1
+				<span class="token keyword">if</span> clipt<span class="token punctuation">(</span>-deltay,y1-yB,tL,tU<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token keyword">then</span> <span class="token comment">#bottom edge</span>
+					<span class="token keyword">if</span> clipt<span class="token punctuation">(</span>deltay,yT-y1,tL,tU<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token keyword">then</span> <span class="token comment">#top edge</span>
+						<span class="token keyword">if</span> tU<span class="token operator">&lt;</span><span class="token number">1</span> <span class="token keyword">then</span> 
+							x2 <span class="token operator">=</span> x1+tU*delatx
+							y2 <span class="token operator">=</span> y1+tU*deltay
+						end <span class="token keyword">if</span>
+						<span class="token keyword">if</span> tL<span class="token operator">&gt;</span><span class="token number">0</span> <span class="token keyword">then</span>
+							x1 <span class="token operator">=</span> x1+tL*deltax
+							y1 <span class="token operator">=</span> y1+tL*deltay
+						end <span class="token keyword">if</span>
+						Draw P1,P2
+					end <span class="token keyword">if</span>
+				end <span class="token keyword">if</span>
+			end <span class="token keyword">if</span>
+		end <span class="token keyword">if</span>
+</code></pre></div><h3 id="opengl实现代码"><a href="#opengl实现代码" class="header-anchor">#</a> openGL实现代码：</h3> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;windows.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;GL/glut.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;math.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token keyword">float</span> xmin<span class="token punctuation">,</span>xmax<span class="token punctuation">,</span>ymin<span class="token punctuation">,</span>ymax<span class="token punctuation">;</span>
+ 
+ 
+<span class="token keyword">void</span> <span class="token function">myinit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glShadeModel</span> <span class="token punctuation">(</span>GL_FLAT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glClearColor</span> <span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+ 
+<span class="token keyword">void</span> <span class="token function">myReshape</span><span class="token punctuation">(</span><span class="token keyword">int</span> w<span class="token punctuation">,</span> <span class="token keyword">int</span> h<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glViewport</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> w<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glMatrixMode</span><span class="token punctuation">(</span>GL_PROJECTION<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glLoadIdentity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>w <span class="token operator">&lt;=</span> h<span class="token punctuation">)</span> 
+	<span class="token function">gluOrtho2D</span> <span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token operator">*</span><span class="token punctuation">(</span>GLfloat<span class="token punctuation">)</span>h<span class="token operator">/</span><span class="token punctuation">(</span>GLfloat<span class="token punctuation">)</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> 
+	<span class="token function">gluOrtho2D</span> <span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token operator">*</span><span class="token punctuation">(</span>GLfloat<span class="token punctuation">)</span>w<span class="token operator">/</span><span class="token punctuation">(</span>GLfloat<span class="token punctuation">)</span>h<span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glMatrixMode</span><span class="token punctuation">(</span>GL_MODELVIEW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">Clip</span><span class="token punctuation">(</span><span class="token keyword">float</span> p<span class="token punctuation">,</span><span class="token keyword">float</span> q<span class="token punctuation">,</span><span class="token keyword">float</span> <span class="token operator">*</span>tL<span class="token punctuation">,</span><span class="token keyword">float</span> <span class="token operator">*</span>tU<span class="token punctuation">)</span> 
+<span class="token punctuation">{</span>  
+	<span class="token keyword">int</span> flag<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">/*flag为标志变量0表示舍弃1表示可见*/</span> 
+	<span class="token keyword">float</span> r<span class="token punctuation">;</span> 
+ 
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token operator">&lt;</span><span class="token number">0.0</span><span class="token punctuation">)</span> 
+	<span class="token punctuation">{</span> 
+		r<span class="token operator">=</span>q<span class="token operator">/</span>p<span class="token punctuation">;</span> 
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token operator">&gt;</span><span class="token operator">*</span>tU<span class="token punctuation">)</span>
+			flag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> 
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token operator">&gt;</span><span class="token operator">*</span>tL<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token operator">*</span>tL <span class="token operator">=</span> r<span class="token punctuation">;</span><span class="token comment">/*m取进入点最大参数值*/</span> 
+		<span class="token punctuation">}</span> 
+	<span class="token punctuation">}</span> 
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token operator">&gt;</span><span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		r<span class="token operator">=</span>q<span class="token operator">/</span>p<span class="token punctuation">;</span> 
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token operator">&lt;</span><span class="token operator">*</span>tL<span class="token punctuation">)</span>
+			flag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> 
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token operator">&lt;</span><span class="token operator">*</span>tU<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token operator">*</span>tU <span class="token operator">=</span> r<span class="token punctuation">;</span><span class="token comment">/*n取离开点的最小值*/</span> 
+		<span class="token punctuation">}</span> 
+	<span class="token punctuation">}</span> 
+ 
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>q<span class="token operator">&lt;</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> p<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">//平行于边界而且在界外的线 </span>
+		flag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> 
+	<span class="token keyword">return</span> flag<span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">myclip</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// line clipping algorithm </span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">float</span> dx<span class="token punctuation">,</span> dy<span class="token punctuation">,</span> x1<span class="token punctuation">,</span>tL<span class="token punctuation">,</span>tU<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> y1<span class="token punctuation">,</span> y2<span class="token punctuation">;</span>
+	tL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> tU <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;请输入线段的两个顶点坐标x1,y1,x2,y2:\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">&quot;%f%f%f%f&quot;</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>x1<span class="token punctuation">,</span><span class="token operator">&amp;</span>y1<span class="token punctuation">,</span><span class="token operator">&amp;</span>x2<span class="token punctuation">,</span><span class="token operator">&amp;</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token function">glBegin</span><span class="token punctuation">(</span>GL_LINES<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token function">glColor4f</span> <span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span> y1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// line startpoint </span>
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span>x2<span class="token punctuation">,</span> y2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// line endpoint </span>
+	<span class="token function">glEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+ 
+	dx<span class="token operator">=</span>x2<span class="token operator">-</span>x1<span class="token punctuation">;</span> 
+  
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Clip</span><span class="token punctuation">(</span><span class="token operator">-</span>dx<span class="token punctuation">,</span> x1 <span class="token operator">-</span> xmin<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Clip</span><span class="token punctuation">(</span>dx<span class="token punctuation">,</span> xmax <span class="token operator">-</span> x1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			dy<span class="token operator">=</span>y2<span class="token operator">-</span>y1<span class="token punctuation">;</span> 
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Clip</span><span class="token punctuation">(</span><span class="token operator">-</span>dy<span class="token punctuation">,</span> y1 <span class="token operator">-</span> ymin<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Clip</span><span class="token punctuation">(</span>dy<span class="token punctuation">,</span> ymax <span class="token operator">-</span> y1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token punctuation">{</span> 
+					<span class="token keyword">if</span> <span class="token punctuation">(</span>tU<span class="token operator">&lt;</span><span class="token number">1.0</span><span class="token punctuation">)</span> 
+					<span class="token punctuation">{</span> 
+						x2 <span class="token operator">=</span> x1 <span class="token operator">+</span> tU<span class="token operator">*</span>dx<span class="token punctuation">;</span><span class="token comment">//通过n求得裁剪后的p2端点 </span>
+						y2 <span class="token operator">=</span> y1 <span class="token operator">+</span> tU<span class="token operator">*</span>dy<span class="token punctuation">;</span>
+					<span class="token punctuation">}</span> 
+					<span class="token keyword">if</span> <span class="token punctuation">(</span>tL<span class="token operator">&gt;</span><span class="token number">0.0</span><span class="token punctuation">)</span>
+					<span class="token punctuation">{</span> 
+						x1 <span class="token operator">=</span> x1 <span class="token operator">+</span> tL<span class="token operator">*</span>dx<span class="token punctuation">;</span><span class="token comment">//通过m求得裁剪后的p1端点 </span>
+						y1 <span class="token operator">=</span> y1 <span class="token operator">+</span> tL<span class="token operator">*</span>dy<span class="token punctuation">;</span>
+					<span class="token punctuation">}</span> 
+					<span class="token function">glBegin</span><span class="token punctuation">(</span>GL_LINES<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+					<span class="token function">glColor4f</span> <span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+					<span class="token function">glVertex2f</span><span class="token punctuation">(</span> x1<span class="token punctuation">,</span> y1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// clipped line startpoint </span>
+					<span class="token function">glVertex2f</span><span class="token punctuation">(</span> x2<span class="token punctuation">,</span> y2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// clipped line endpoint </span>
+					<span class="token function">glEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span> 
+		<span class="token punctuation">}</span> 
+ 
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+    <span class="token function">glClear</span><span class="token punctuation">(</span>GL_COLOR_BUFFER_BIT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;请分别输入矩形的左右下上边界：\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">&quot;%f%f%f%f&quot;</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>xmin<span class="token punctuation">,</span><span class="token operator">&amp;</span>xmax<span class="token punctuation">,</span><span class="token operator">&amp;</span>ymin<span class="token punctuation">,</span><span class="token operator">&amp;</span>ymax<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glColor4f</span> <span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">glBegin</span><span class="token punctuation">(</span>GL_POLYGON<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span> xmin<span class="token punctuation">,</span> ymin<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bottom Left</span>
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span> xmax<span class="token punctuation">,</span> ymin<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bottom Left</span>
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span> xmax<span class="token punctuation">,</span> ymax<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bottom Right</span>
+	<span class="token function">glVertex2f</span><span class="token punctuation">(</span> xmin<span class="token punctuation">,</span> ymax<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bottom Right</span>
+	<span class="token function">glEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token function">myclip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">glFlush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+ 
+<span class="token comment">/*  Main Loop
+ *  Open window with initial window size, title bar, 
+ *  RGBA display mode, and handle input events.
+ */</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">glutInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">glutInitDisplayMode</span> <span class="token punctuation">(</span>GLUT_SINGLE <span class="token operator">|</span> GLUT_RGBA<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token comment">//define size and the relative positon of the applicaiton window on the display</span>
+   <span class="token function">glutInitWindowSize</span> <span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token function">glutInitWindowPosition</span> <span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 	<span class="token comment">//init the defined window with &quot;argv[1]&quot; as topic showed on the top the window</span>
+   <span class="token function">glutCreateWindow</span> <span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">// opengl setup</span>
+   <span class="token function">myinit</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">//define callbacks</span>
+   <span class="token function">glutDisplayFunc</span><span class="token punctuation">(</span>display<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token function">glutReshapeFunc</span><span class="token punctuation">(</span>myReshape<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token comment">//enter the loop for display</span>
+   <span class="token function">glutMainLoop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+</code></pre></div><h3 id="mfc实现代码"><a href="#mfc实现代码" class="header-anchor">#</a> MFC实现代码：</h3> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// 511works.cpp : 定义应用程序的入口点。</span>
+<span class="token comment">//</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;framework.h&quot;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;511works.h&quot;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;math.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;string&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;atlstr.h&gt;</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">MAX_LOADSTRING <span class="token number">100</span></span></span>
+
+<span class="token comment">// 全局变量:</span>
+HINSTANCE hInst<span class="token punctuation">;</span>                                <span class="token comment">// 当前实例</span>
+WCHAR szTitle<span class="token punctuation">[</span>MAX_LOADSTRING<span class="token punctuation">]</span><span class="token punctuation">;</span>                  <span class="token comment">// 标题栏文本</span>
+WCHAR szWindowClass<span class="token punctuation">[</span>MAX_LOADSTRING<span class="token punctuation">]</span><span class="token punctuation">;</span>            <span class="token comment">// 主窗口类名</span>
+
+<span class="token comment">//自定义全局变量</span>
+POINT point<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+POINT LinePoint<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> position <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> LinePosition <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+RECT rect<span class="token punctuation">;</span>
+POINT p<span class="token punctuation">;</span>
+<span class="token keyword">int</span> xmin<span class="token punctuation">,</span> xmax<span class="token punctuation">,</span> ymin<span class="token punctuation">,</span> ymax<span class="token punctuation">;</span>
+
+
+<span class="token comment">//函数声明</span>
+<span class="token keyword">void</span> <span class="token function">myclip</span><span class="token punctuation">(</span>HDC hdc<span class="token punctuation">,</span> HWND hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">GetMinMax</span><span class="token punctuation">(</span>POINT<span class="token operator">*</span> point<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">// 此代码模块中包含的函数的前向声明:</span>
+ATOM                <span class="token function">MyRegisterClass</span><span class="token punctuation">(</span>HINSTANCE hInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+BOOL                <span class="token function">InitInstance</span><span class="token punctuation">(</span>HINSTANCE<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+LRESULT CALLBACK    <span class="token function">WndProc</span><span class="token punctuation">(</span>HWND<span class="token punctuation">,</span> UINT<span class="token punctuation">,</span> WPARAM<span class="token punctuation">,</span> LPARAM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+INT_PTR CALLBACK    <span class="token function">About</span><span class="token punctuation">(</span>HWND<span class="token punctuation">,</span> UINT<span class="token punctuation">,</span> WPARAM<span class="token punctuation">,</span> LPARAM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> APIENTRY <span class="token function">wWinMain</span><span class="token punctuation">(</span>_In_ HINSTANCE hInstance<span class="token punctuation">,</span>
+                     _In_opt_ HINSTANCE hPrevInstance<span class="token punctuation">,</span>
+                     _In_ LPWSTR    lpCmdLine<span class="token punctuation">,</span>
+                     _In_ <span class="token keyword">int</span>       nCmdShow<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UNREFERENCED_PARAMETER</span><span class="token punctuation">(</span>hPrevInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">UNREFERENCED_PARAMETER</span><span class="token punctuation">(</span>lpCmdLine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO: 在此处放置代码。</span>
+
+    <span class="token comment">// 初始化全局字符串</span>
+    <span class="token function">LoadStringW</span><span class="token punctuation">(</span>hInstance<span class="token punctuation">,</span> IDS_APP_TITLE<span class="token punctuation">,</span> szTitle<span class="token punctuation">,</span> MAX_LOADSTRING<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">LoadStringW</span><span class="token punctuation">(</span>hInstance<span class="token punctuation">,</span> IDC_MY511WORKS<span class="token punctuation">,</span> szWindowClass<span class="token punctuation">,</span> MAX_LOADSTRING<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">MyRegisterClass</span><span class="token punctuation">(</span>hInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 执行应用程序初始化:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">InitInstance</span> <span class="token punctuation">(</span>hInstance<span class="token punctuation">,</span> nCmdShow<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> FALSE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    HACCEL hAccelTable <span class="token operator">=</span> <span class="token function">LoadAccelerators</span><span class="token punctuation">(</span>hInstance<span class="token punctuation">,</span> <span class="token function">MAKEINTRESOURCE</span><span class="token punctuation">(</span>IDC_MY511WORKS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    MSG msg<span class="token punctuation">;</span>
+
+    <span class="token comment">// 主消息循环:</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">GetMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">TranslateAccelerator</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span>hwnd<span class="token punctuation">,</span> hAccelTable<span class="token punctuation">,</span> <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">TranslateMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">DispatchMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> msg<span class="token punctuation">.</span>wParam<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+
+<span class="token comment">//</span>
+<span class="token comment">//  函数: MyRegisterClass()</span>
+<span class="token comment">//</span>
+<span class="token comment">//  目标: 注册窗口类。</span>
+<span class="token comment">//</span>
+ATOM <span class="token function">MyRegisterClass</span><span class="token punctuation">(</span>HINSTANCE hInstance<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    WNDCLASSEXW wcex<span class="token punctuation">;</span>
+
+    wcex<span class="token punctuation">.</span>cbSize <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>WNDCLASSEX<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    wcex<span class="token punctuation">.</span>style          <span class="token operator">=</span> CS_HREDRAW <span class="token operator">|</span> CS_VREDRAW<span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>lpfnWndProc    <span class="token operator">=</span> WndProc<span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>cbClsExtra     <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>cbWndExtra     <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>hInstance      <span class="token operator">=</span> hInstance<span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>hIcon          <span class="token operator">=</span> <span class="token function">LoadIcon</span><span class="token punctuation">(</span>hInstance<span class="token punctuation">,</span> <span class="token function">MAKEINTRESOURCE</span><span class="token punctuation">(</span>IDI_MY511WORKS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>hCursor        <span class="token operator">=</span> <span class="token function">LoadCursor</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span> IDC_ARROW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>hbrBackground  <span class="token operator">=</span> <span class="token punctuation">(</span>HBRUSH<span class="token punctuation">)</span><span class="token punctuation">(</span>COLOR_WINDOW<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>lpszMenuName   <span class="token operator">=</span> <span class="token function">MAKEINTRESOURCEW</span><span class="token punctuation">(</span>IDC_MY511WORKS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>lpszClassName  <span class="token operator">=</span> szWindowClass<span class="token punctuation">;</span>
+    wcex<span class="token punctuation">.</span>hIconSm        <span class="token operator">=</span> <span class="token function">LoadIcon</span><span class="token punctuation">(</span>wcex<span class="token punctuation">.</span>hInstance<span class="token punctuation">,</span> <span class="token function">MAKEINTRESOURCE</span><span class="token punctuation">(</span>IDI_SMALL<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token function">RegisterClassExW</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>wcex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//</span>
+<span class="token comment">//   函数: InitInstance(HINSTANCE, int)</span>
+<span class="token comment">//</span>
+<span class="token comment">//   目标: 保存实例句柄并创建主窗口</span>
+<span class="token comment">//</span>
+<span class="token comment">//   注释:</span>
+<span class="token comment">//</span>
+<span class="token comment">//        在此函数中，我们在全局变量中保存实例句柄并</span>
+<span class="token comment">//        创建和显示主程序窗口。</span>
+<span class="token comment">//</span>
+BOOL <span class="token function">InitInstance</span><span class="token punctuation">(</span>HINSTANCE hInstance<span class="token punctuation">,</span> <span class="token keyword">int</span> nCmdShow<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   hInst <span class="token operator">=</span> hInstance<span class="token punctuation">;</span> <span class="token comment">// 将实例句柄存储在全局变量中</span>
+
+   HWND hWnd <span class="token operator">=</span> <span class="token function">CreateWindowW</span><span class="token punctuation">(</span>szWindowClass<span class="token punctuation">,</span> szTitle<span class="token punctuation">,</span> WS_OVERLAPPEDWINDOW<span class="token punctuation">,</span>
+      CW_USEDEFAULT<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> CW_USEDEFAULT<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> hInstance<span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hWnd<span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> FALSE<span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+
+   <span class="token function">ShowWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> nCmdShow<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">UpdateWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token keyword">return</span> TRUE<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//</span>
+<span class="token comment">//  函数: WndProc(HWND, UINT, WPARAM, LPARAM)</span>
+<span class="token comment">//</span>
+<span class="token comment">//  目标: 处理主窗口的消息。</span>
+<span class="token comment">//</span>
+<span class="token comment">//  WM_COMMAND  - 处理应用程序菜单</span>
+<span class="token comment">//  WM_PAINT    - 绘制主窗口</span>
+<span class="token comment">//  WM_DESTROY  - 发送退出消息并返回</span>
+<span class="token comment">//</span>
+<span class="token comment">//</span>
+LRESULT CALLBACK <span class="token function">WndProc</span><span class="token punctuation">(</span>HWND hWnd<span class="token punctuation">,</span> UINT message<span class="token punctuation">,</span> WPARAM wParam<span class="token punctuation">,</span> LPARAM lParam<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    HDC hdc<span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> WM_COMMAND<span class="token operator">:</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> wmId <span class="token operator">=</span> <span class="token function">LOWORD</span><span class="token punctuation">(</span>wParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 分析菜单选择:</span>
+            <span class="token keyword">switch</span> <span class="token punctuation">(</span>wmId<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+            <span class="token keyword">case</span> IDM_ABOUT<span class="token operator">:</span>
+                <span class="token function">DialogBox</span><span class="token punctuation">(</span>hInst<span class="token punctuation">,</span> <span class="token function">MAKEINTRESOURCE</span><span class="token punctuation">(</span>IDD_ABOUTBOX<span class="token punctuation">)</span><span class="token punctuation">,</span> hWnd<span class="token punctuation">,</span> About<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> IDM_EXIT<span class="token operator">:</span>
+                <span class="token function">DestroyWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> ID_JUXING<span class="token operator">:</span>
+                hdc <span class="token operator">=</span> <span class="token function">GetDC</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">Rectangle</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">UpdateWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> ID_DRAWLINE<span class="token operator">:</span>
+                hdc <span class="token operator">=</span> <span class="token function">GetDC</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">MoveToEx</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">LineTo</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">UpdateWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> ID_CUT<span class="token operator">:</span>
+                hdc <span class="token operator">=</span> <span class="token function">GetDC</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">GetMinMax</span><span class="token punctuation">(</span>point<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">myclip</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">UpdateWindow</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token operator">:</span>
+                <span class="token keyword">return</span> <span class="token function">DefWindowProc</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> message<span class="token punctuation">,</span> wParam<span class="token punctuation">,</span> lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> WM_LBUTTONDOWN<span class="token operator">:</span>
+        hdc <span class="token operator">=</span> <span class="token function">GetDC</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        position <span class="token operator">=</span> position <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        point<span class="token punctuation">[</span>position<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token function">LOWORD</span><span class="token punctuation">(</span>lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        point<span class="token punctuation">[</span>position<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token function">HIWORD</span><span class="token punctuation">(</span>lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        position<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> WM_RBUTTONDOWN<span class="token operator">:</span>
+        hdc <span class="token operator">=</span> <span class="token function">GetDC</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        LinePoint<span class="token punctuation">[</span>LinePosition<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token function">LOWORD</span><span class="token punctuation">(</span>lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        LinePoint<span class="token punctuation">[</span>LinePosition<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token function">HIWORD</span><span class="token punctuation">(</span>lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        LinePosition<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> WM_PAINT<span class="token operator">:</span>
+        <span class="token punctuation">{</span>
+            PAINTSTRUCT ps<span class="token punctuation">;</span>
+            hdc <span class="token operator">=</span> <span class="token function">BeginPaint</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ps<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// TODO: 在此处添加使用 hdc 的任何绘图代码...</span>
+            <span class="token function">EndPaint</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ps<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> WM_DESTROY<span class="token operator">:</span>
+        <span class="token function">PostQuitMessage</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token keyword">return</span> <span class="token function">DefWindowProc</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> message<span class="token punctuation">,</span> wParam<span class="token punctuation">,</span> lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// “关于”框的消息处理程序。</span>
+INT_PTR CALLBACK <span class="token function">About</span><span class="token punctuation">(</span>HWND hDlg<span class="token punctuation">,</span> UINT message<span class="token punctuation">,</span> WPARAM wParam<span class="token punctuation">,</span> LPARAM lParam<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UNREFERENCED_PARAMETER</span><span class="token punctuation">(</span>lParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> WM_INITDIALOG<span class="token operator">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>INT_PTR<span class="token punctuation">)</span>TRUE<span class="token punctuation">;</span>
+
+    <span class="token keyword">case</span> WM_COMMAND<span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LOWORD</span><span class="token punctuation">(</span>wParam<span class="token punctuation">)</span> <span class="token operator">==</span> IDOK <span class="token operator">||</span> <span class="token function">LOWORD</span><span class="token punctuation">(</span>wParam<span class="token punctuation">)</span> <span class="token operator">==</span> IDCANCEL<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">EndDialog</span><span class="token punctuation">(</span>hDlg<span class="token punctuation">,</span> <span class="token function">LOWORD</span><span class="token punctuation">(</span>wParam<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>INT_PTR<span class="token punctuation">)</span>TRUE<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>INT_PTR<span class="token punctuation">)</span>FALSE<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">GetMinMax</span><span class="token punctuation">(</span>POINT <span class="token operator">*</span> point<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    xmin <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    xmax <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    ymin <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    ymax <span class="token operator">=</span> point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">clip</span><span class="token punctuation">(</span><span class="token keyword">float</span> p<span class="token punctuation">,</span> <span class="token keyword">float</span> q<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> tL<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> tU<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">//0表示舍弃1表示可见</span>
+    <span class="token keyword">float</span> r<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">&lt;</span> <span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        r <span class="token operator">=</span> q <span class="token operator">/</span> p<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">&gt;</span> <span class="token operator">*</span>tU<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">&gt;</span> <span class="token operator">*</span>tL<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token operator">*</span>tL <span class="token operator">=</span> r<span class="token punctuation">;</span><span class="token comment">//取进入点最大参数值</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">&gt;</span> <span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        r <span class="token operator">=</span> q <span class="token operator">/</span> p<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> <span class="token operator">*</span>tL<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> <span class="token operator">*</span>tU<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token operator">*</span>tU <span class="token operator">=</span> r<span class="token punctuation">;</span><span class="token comment">//取离开点最小参数值</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>q <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> p <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> flag<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">myclip</span><span class="token punctuation">(</span>HDC hdc<span class="token punctuation">,</span> HWND hWnd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    HPEN hp<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> dx<span class="token punctuation">,</span> dy<span class="token punctuation">,</span> x1<span class="token punctuation">,</span> tL<span class="token punctuation">,</span> tU<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> y1<span class="token punctuation">,</span> y2<span class="token punctuation">;</span>
+    tL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> tU <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+    x1 <span class="token operator">=</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    y1 <span class="token operator">=</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    x2 <span class="token operator">=</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    y2 <span class="token operator">=</span> LinePoint<span class="token punctuation">[</span>LinePosition <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    dx <span class="token operator">=</span> x2 <span class="token operator">-</span> x1<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">clip</span><span class="token punctuation">(</span><span class="token operator">-</span>dx<span class="token punctuation">,</span> x1 <span class="token operator">-</span> xmin<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">clip</span><span class="token punctuation">(</span>dx<span class="token punctuation">,</span> xmax <span class="token operator">-</span> x1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            dy <span class="token operator">=</span> y2 <span class="token operator">-</span> y1<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">clip</span><span class="token punctuation">(</span><span class="token operator">-</span>dy<span class="token punctuation">,</span> y1 <span class="token operator">-</span> ymin<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">clip</span><span class="token punctuation">(</span>dy<span class="token punctuation">,</span> ymax <span class="token operator">-</span> y1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tU<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>tU <span class="token operator">&lt;</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        x2 <span class="token operator">=</span> x1 <span class="token operator">+</span> tU <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+                        y2 <span class="token operator">=</span> y1 <span class="token operator">+</span> tU <span class="token operator">*</span> dy<span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>tL <span class="token operator">&gt;</span> <span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        x1 <span class="token operator">=</span> x1 <span class="token operator">+</span> tL <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+                        y1 <span class="token operator">=</span> y1 <span class="token operator">+</span> tL <span class="token operator">*</span> dy<span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    hp <span class="token operator">=</span> <span class="token function">CreatePen</span><span class="token punctuation">(</span>PS_SOLID<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token function">RGB</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">SelectObject</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> hp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">MoveToEx</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> x1<span class="token punctuation">,</span> y1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">LineTo</span><span class="token punctuation">(</span>hdc<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">DeleteObject</span><span class="token punctuation">(</span>hp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    string tLString <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>tL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    string tUString <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>tU<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    LPCTSTR startParams <span class="token operator">=</span> L<span class="token string">&quot;开始组参数: &quot;</span><span class="token punctuation">;</span>
+                    LPCTSTR endParams <span class="token operator">=</span> L<span class="token string">&quot;结束组参数: &quot;</span><span class="token punctuation">;</span>
+                    LPCTSTR pointposition <span class="token operator">=</span> L<span class="token string">&quot;裁剪后线段端点分别为(顺序为x1,y1,x2,y2): &quot;</span><span class="token punctuation">;</span>
+                    string x1string <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>x1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    string x2string <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>x2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    string y1string <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    string y2string <span class="token operator">=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    CString content <span class="token operator">=</span> <span class="token function">CString</span><span class="token punctuation">(</span>startParams<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>tLString<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>endParams<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>tUString<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>pointposition<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>x1string<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>L<span class="token string">&quot; &quot;</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>y1string<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>L<span class="token string">&quot; &quot;</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>x2string<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>L<span class="token string">&quot; &quot;</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">CString</span><span class="token punctuation">(</span>y2string<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">MessageBox</span><span class="token punctuation">(</span>hWnd<span class="token punctuation">,</span> content<span class="token punctuation">,</span> L<span class="token string">&quot;result&quot;</span><span class="token punctuation">,</span> MB_OK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">7/16/2021, 11:21:56 AM</span></div></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas><div></div><div><div class="sponsor-container" data-v-7e309dbc><div class="sponsor-love position-absolute transition-3ms" data-v-7e309dbc>
+    支持一下
+  </div> <a href="https://github.com/yokefellow/vuepress-plugin-sponsor" target="_blank" title="Github" class="sponsor-github position-absolute transition-3ms" data-v-7e309dbc></a> <ul class="sponsor-payment-options transition-3ms" data-v-7e309dbc><li id="alipay-option" class="transition-3ms" data-v-7e309dbc></li> <li id="wechat-option" class="transition-3ms" data-v-7e309dbc></li> <li id="qq-option" class="transition-3ms" data-v-7e309dbc></li> <li id="paypal-option" class="transition-3ms" data-v-7e309dbc></li></ul> <div class="sponsor-qrcode-container position-absolute" style="display:none;" data-v-7e309dbc data-v-7e309dbc><div class="sponsor-qrcode-info" style="background-image:url();pointer-events:none;display:none;" data-v-7e309dbc data-v-7e309dbc></div></div> <div class="sponsor-message position-absolute" style="display:none;" data-v-7e309dbc data-v-7e309dbc>
+      主人忘记设置啦
+    </div></div></div><!----><!----><div id="pwa-install"><!----> <div id="install-modal-wrapper" style="display:none;"><div class="background"></div> <div class="install-modal"><div class="header"><button aria-label="Close" class="close-button"><svg width="23" height="22" xmlns="http://www.w3.org/2000/svg" class="icon close-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.12.358a1.224 1.224 0 011.729 0l8.92 8.914L20.686.358a1.224 1.224 0 011.73 1.728L13.497 11l8.92 8.913a1.222 1.222 0 11-1.73 1.729l-8.919-8.913-8.92 8.913a1.224 1.224 0 01-1.729-1.729L10.04 11l-8.92-8.914a1.222 1.222 0 010-1.728z" fill="currentColor"></path></svg></button> <div class="logo"><!----> <div class="title"><h1></h1> <p class="desc">This app can be installed on your PC or mobile device.  This will allow this web app to look and behave like any other installed app.  You will find it in your app lists and be able to pin it to your home screen, start menus or task bars.  This installed web app will also be able to safely interact with other apps and your operating system. </p></div></div></div> <div class="content"><div class="highlight"><!----> <!----></div> <div class="description"><h3>Description</h3> <p></p></div></div> <div class="button-wrapper"><button class="install-button">
+        Install <span></span></button> <button class="cancel-button">
+        Cancel
+      </button></div></div></div></div><div id="live2d-widget" class="live2d-widget-container" style="position:fixed;right:65px;bottom:0px;width:135px;height:300px;z-index:99999;opacity:0.8;pointer-events:none;"><canvas id="live2d_canvas" width="135" height="300" class="live2d_canvas" style="position:absolute;left:0px;top:0px;width:135px;height:300px;"></canvas></div></div></div>
+    <script src="/jyms-blog/assets/js/app.d7dce730.js" defer></script><script src="/jyms-blog/assets/js/5.0d7927b5.js" defer></script><script src="/jyms-blog/assets/js/1.c5097614.js" defer></script><script src="/jyms-blog/assets/js/44.e66661c6.js" defer></script>
+  </body>
+</html>
